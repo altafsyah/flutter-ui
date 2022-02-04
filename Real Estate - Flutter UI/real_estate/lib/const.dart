@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+final double vert = 40;
+final double horz = 30;
 Color primaryColor = Color(0xffFBA651);
 Color blackColor = Color(0xff191410);
 Color gray1Color = Color(0xff7B756F);
