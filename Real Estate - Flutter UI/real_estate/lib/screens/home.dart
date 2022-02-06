@@ -163,7 +163,7 @@ class Home extends StatelessWidget {
   }
 }
 
-class PopularCard extends StatelessWidget {
+class PopularCard extends StatefulWidget {
   final String? title;
   final String? subTitle;
   final String? imgUrl;
@@ -174,6 +174,12 @@ class PopularCard extends StatelessWidget {
     @required this.imgUrl,
   });
 
+  @override
+  _PopularCardState createState() => _PopularCardState();
+}
+
+class _PopularCardState extends State<PopularCard> {
+  bool isFav = false;
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
@@ -201,29 +207,38 @@ class PopularCard extends StatelessWidget {
                     fit: BoxFit.fill,
                     colorFilter: ColorFilter.mode(
                         Colors.black.withOpacity(0.3), BlendMode.srcOver),
-                    image: AssetImage(imgUrl!))),
+                    image: AssetImage(widget.imgUrl!))),
           ),
           title: Text(
-            title!,
+            widget.title!,
             style: semiBoldText.copyWith(color: blackColor, fontSize: 14),
           ),
           subtitle: Text(
-            subTitle!,
+            widget.subTitle!,
             style: regText.copyWith(color: gray1Color, fontSize: 10),
           ),
-          trailing: Container(
-            padding: EdgeInsets.all(5),
-            child: Icon(
-              IconlyBold.heart,
-              color: gray3Color,
-              size: 14,
+          trailing: InkWell(
+            onTap: () {
+              setState(() {
+                isFav = !isFav;
+              });
+            },
+            child: Container(
+              padding: EdgeInsets.all(5),
+              child: isFav
+                  ? Icon(IconlyBold.heart, color: Color(0xffED0000), size: 14)
+                  : Icon(
+                      IconlyBold.heart,
+                      color: gray3Color,
+                      size: 14,
+                    ),
             ),
           ),
         ));
   }
 }
 
-class HeaderCard extends StatelessWidget {
+class HeaderCard extends StatefulWidget {
   final String? imgUrl;
   final String? title;
   final String? subTitle;
@@ -234,6 +249,12 @@ class HeaderCard extends StatelessWidget {
     @required this.subTitle,
   });
 
+  @override
+  _HeaderCardState createState() => _HeaderCardState();
+}
+
+class _HeaderCardState extends State<HeaderCard> {
+  bool isFav = false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -246,7 +267,7 @@ class HeaderCard extends StatelessWidget {
               fit: BoxFit.fill,
               colorFilter: ColorFilter.mode(
                   Colors.black.withOpacity(0.3), BlendMode.srcOver),
-              image: AssetImage(imgUrl!))),
+              image: AssetImage(widget.imgUrl!))),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -256,23 +277,36 @@ class HeaderCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                title!,
+                widget.title!,
                 style: boldText.copyWith(fontSize: 16, color: whiteColor),
               ),
               Text(
-                subTitle!,
+                widget.subTitle!,
                 style: regText.copyWith(fontSize: 10, color: Colors.white),
               )
             ],
           ),
-          CustomContainer(
-            child: Icon(
-              IconlyBold.heart,
-              color: Color(0xffED0000),
-              size: 14,
+          InkWell(
+            onTap: () {
+              setState(() {
+                isFav = !isFav;
+              });
+            },
+            child: CustomContainer(
+              child: isFav
+                  ? Icon(
+                      IconlyBold.heart,
+                      color: Color(0xffED0000),
+                      size: 14,
+                    )
+                  : Icon(
+                      IconlyBold.heart,
+                      color: gray1Color,
+                      size: 14,
+                    ),
+              padding: 5,
+              color: Colors.white.withOpacity(0.5),
             ),
-            padding: 5,
-            color: Colors.white.withOpacity(0.5),
           )
         ],
       ),

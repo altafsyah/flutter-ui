@@ -11,7 +11,8 @@ class Detail extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
-          body: Column(
+        body: SingleChildScrollView(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
@@ -38,7 +39,7 @@ class Detail extends StatelessWidget {
                   height: 328,
                   child: Image.asset(
                     'assets/img/house_pic_1.png',
-                    fit: BoxFit.fill,
+                    fit: BoxFit.scaleDown,
                   ),
                 ),
               ),
@@ -94,14 +95,15 @@ class Detail extends StatelessWidget {
                         text:
                             'American classic house, this house has always been a target for property companies because of its ancient style but very attractive',
                         style: regText.copyWith(
-                          color: gray2Color,
-                          fontSize: 12,
-                        ),
+                            color: gray2Color, fontSize: 12, wordSpacing: 4),
                         children: [
                       TextSpan(
                           text: ' Read More',
                           style: regText.copyWith(
-                              color: primaryColor, fontSize: 12))
+                            color: primaryColor,
+                            fontSize: 12,
+                            wordSpacing: 4,
+                          ))
                     ])),
               ),
               Padding(
@@ -111,10 +113,87 @@ class Detail extends StatelessWidget {
                   style: semiBoldText.copyWith(fontSize: 16, color: blackColor),
                 ),
               ),
+              Container(
+                height: 60,
+                width: double.infinity,
+                margin: EdgeInsets.only(top: 15),
+                child: ListView(
+                  padding: EdgeInsets.symmetric(horizontal: 30),
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    OverviewCard(),
+                    OverviewCard(),
+                    OverviewCard(),
+                    OverviewCard(),
+                    OverviewCard(),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 30),
+                height: 60,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Price',
+                            style: regText.copyWith(
+                                fontSize: 12, color: gray1Color)),
+                        Text('\$300',
+                            style: semiBoldText.copyWith(
+                                fontSize: 20, color: blackColor)),
+                      ],
+                    ),
+                    InkWell(
+                      child: Container(
+                        width: width - 152,
+                        height: 60,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(18),
+                            color: blackColor),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Buy',
+                            style: semiBoldText.copyWith(
+                                fontSize: 16, color: whiteColor),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              )
             ],
           ),
-          bottomNavigationBar: CustomBottomNavbar()),
+        ),
+      ),
     );
-    ;
+  }
+}
+
+class OverviewCard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(right: 15),
+      height: 60,
+      width: 60,
+      decoration: BoxDecoration(
+          color: Colors.black.withOpacity(0.2),
+          borderRadius: BorderRadius.circular(14),
+          image: DecorationImage(
+              colorFilter: ColorFilter.mode(
+                  Colors.black.withOpacity(0.2), BlendMode.srcOver),
+              image: AssetImage('assets/img/overview_1.png'))),
+    );
   }
 }
