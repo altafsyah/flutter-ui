@@ -129,6 +129,44 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   bool isScroll = true;
+  double width = 120;
+  Widget floatingActionButton() {
+    return AnimatedContainer(
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      width: width,
+      duration: Duration(milliseconds: 200),
+      height: 50,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        physics: NeverScrollableScrollPhysics(),
+        child: width == 120
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Icon(
+                    Icons.edit,
+                    color: Colors.white,
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  width == 120
+                      ? Text(
+                          'Compose',
+                          style: primaryText.copyWith(color: Colors.white),
+                        )
+                      : Text('')
+                ],
+              )
+            : Icon(
+                Icons.edit,
+                color: Colors.white,
+              ),
+      ),
+      decoration: BoxDecoration(
+          color: accentColor, borderRadius: BorderRadius.circular(10)),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -139,11 +177,11 @@ class _HomeScreenState extends State<HomeScreen> {
           onNotification: (notification) {
             if (notification.direction == ScrollDirection.forward) {
               setState(() {
-                isScroll = true;
+                width = 120;
               });
             } else if (notification.direction == ScrollDirection.reverse) {
               setState(() {
-                isScroll = false;
+                width = 50;
               });
             }
             return true;
@@ -185,15 +223,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 icon: Icon(Icons.videocam_outlined), label: 'Meet')
           ],
         ),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {},
-          label: Text('Compose'),
-          backgroundColor: accentColor,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          isExtended: isScroll,
-          icon: Icon(Icons.edit),
-        ),
+        floatingActionButton: floatingActionButton(),
+        //  FloatingActionButton.extended(
+        //   onPressed: () {},
+        //   label: Text('Compose'),
+        //   backgroundColor: accentColor,
+        //   shape:
+        //       RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        //   isExtended: isScroll,
+        //   icon: Icon(Icons.edit),
+        // ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       ),
     );
